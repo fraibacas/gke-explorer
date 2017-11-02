@@ -1,0 +1,28 @@
+# [START add_project]
+swagger: "2.0"
+info:
+  description: "Mock Zing Reporter API."
+  title: "Mock Reporter API"
+  version: "1.0.0"
+host: "zing-reporter.endpoints.zing-mock.cloud.goog"
+#x-google-endpoints:
+#- name: "zing-reporter.endpoints.zing-mock.cloud.goog"
+#  target: "http://104.154.115.194/"
+# [END add_project]
+basePath: "/"
+consumes:
+- "application/json"
+produces:
+- "text/html"
+schemes:
+- "https"
+paths:
+  "/reporter":
+    get:
+      description: "Says hello."
+      operationId: "sayhi"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "OK"

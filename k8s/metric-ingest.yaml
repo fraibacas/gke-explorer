@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: metric-ingest
+    labels:
+        app: metric-ingest
+spec:
+    ports:
+    - port: 80
+      targetPort: 8081
+    type: NodePort
+    selector:
+        app: metric-ingest
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+    name: metric-ingest
+spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: metric-ingest
+    template:
+        metadata:
+          labels:
+            app: metric-ingest
+        spec:
+            containers:
+            - name: esp
+              image: gcr.io/endpoints-release/endpoints-runtime:1
+              args: [
+                "-p", "8081",
+                "-a", "127.0.0.1:8080",
+                "-s", "zing-metric-ingest.endpoints.zing-mock.cloud.goog",
+                "-v", "2017-11-02r2",
+                "-z", "healthz",
+              ]
+              readinessProbe:
+                httpGet:
+                  path: /healthz
+                  port: 8081
+              ports:
+                - containerPort: 8081
+            - name: metric-ingest
+              image: eamonwoortman/alpine-python-curl-zip
+              command: ["python"]
+              args: ["./server.py"]
+              env:
+                - name: MICROSERVICE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: metric-ingest-env
+                      key: svc.name
+              workingDir: /server
+              #ports:
+              #- containerPort: 8000
+              volumeMounts:
+              - mountPath: /server
+                name: server-vol
+            volumes:
+            - name: server-vol
+              configMap:
+                name: server-vol
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metric-ingest-env
+  namespace: default
+data:
+  svc.name: metric-ingest

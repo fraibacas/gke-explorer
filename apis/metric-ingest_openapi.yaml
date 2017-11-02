@@ -1,0 +1,28 @@
+# [START add_project]
+swagger: "2.0"
+info:
+  description: "Mock Zing Metric Ingest API."
+  title: "Mock Metric Ingest API"
+  version: "1.0.0"
+host: "zing-metric-ingest.endpoints.zing-mock.cloud.goog"
+#x-google-endpoints:
+#- name: "echo-api.endpoints.ambient-tuner-184614.cloud.goog"
+#  target: "130.211.199.223"
+# [END add_project]
+basePath: "/"
+consumes:
+- "application/json"
+produces:
+- "text/html"
+schemes:
+- "https"
+paths:
+  "/metric-ingest":
+    get:
+      description: "Says hello."
+      operationId: "ingest"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "OK"

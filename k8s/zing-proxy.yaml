@@ -1,0 +1,20 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata: 
+  name: zing-proxy-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    #kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/rewrite-target: "/"
+spec:
+  rules:
+  - http: 
+      paths:
+      - path: /api/reporter
+        backend: 
+          serviceName: reporter
+          servicePort: 80
+      - path: /api/metric-ingest
+        backend: 
+          serviceName: metric-ingest
+          servicePort: 80
