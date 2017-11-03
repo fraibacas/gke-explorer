@@ -33,7 +33,7 @@ spec:
                 "-p", "8081",
                 "-a", "127.0.0.1:8080",
                 "-s", "zing-metric-ingest.endpoints.zing-mock.cloud.goog",
-                "-v", "2017-11-02r2",
+                "-v", "2017-11-03r0",
                 "-z", "healthz",
               ]
               readinessProbe:

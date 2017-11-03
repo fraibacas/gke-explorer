@@ -10,11 +10,11 @@ spec:
   rules:
   - http: 
       paths:
-      - path: /api/reporter
+      - path: /api/reporter/*
         backend: 
           serviceName: reporter
           servicePort: 80
-      - path: /api/metric-ingest
+      - path: /api/metric-ingest/*
         backend: 
           serviceName: metric-ingest
           servicePort: 80

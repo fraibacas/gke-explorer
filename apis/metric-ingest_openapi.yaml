@@ -17,7 +17,7 @@ produces:
 schemes:
 - "https"
 paths:
-  "/metric-ingest":
+  "/ingest":
     get:
       description: "Says hello."
       operationId: "ingest"
